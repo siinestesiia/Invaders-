@@ -11,15 +11,16 @@ public class PlayerController : MonoBehaviour
     InputAction leftWeaponAttack;
     InputAction rightWeaponAttack;
 
-
     private Vector2 mousePosition;
-    [Header ("Movement Boundaries of the Screen.")]
+    private float cameraHeight;
+    
+    [Header ("World Space Boundaries for the Spaceship movement.")]
     [SerializeField] float minX = -28;
     [SerializeField] float maxX = 28;
     [SerializeField] float minZ = -15;
     [SerializeField] float maxZ = 14;
 
-    private float cameraHeight;
+    float movementSmoothness = 13f; // Higher value = faster movement.
 
     
     void Start()
@@ -47,11 +48,12 @@ public class PlayerController : MonoBehaviour
         Vector3 screenPoint = new Vector3(mousePosition.x, mousePosition.y, cameraHeight);
         Vector3 worldMousePosition = Camera.main.ScreenToWorldPoint(screenPoint);
 
-        Vector3 newPosition = new Vector3(worldMousePosition.x, transform.position.y, worldMousePosition.z);
-        transform.position = ClampPosition(newPosition);
+        // Calculate the clamped target position (for the mouse converted from screen to world).
+        Vector3 targetPosition = ClampPosition(new Vector3(worldMousePosition.x, transform.position.y, worldMousePosition.z));
+        transform.position = Vector3.Lerp(transform.position, targetPosition, movementSmoothness * Time.deltaTime);
     }
 
-    // Set the screen boundaries for the Spaceship movement.
+    // Set World Space boundaries for the Spaceship movement.
     private Vector3 ClampPosition(Vector3 positionCoordinates)
     {
         float clampedX = Mathf.Clamp(positionCoordinates.x, minX, maxX);

@@ -458,6 +458,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerObject: {fileID: 7185711951793755815, guid: 9dbd7e302e97413418a59b0eb4ee0582,
     type: 3}
+  cursorIsVisible: 0
 --- !u!4 &1129736878
 Transform:
   m_ObjectHideFlags: 0

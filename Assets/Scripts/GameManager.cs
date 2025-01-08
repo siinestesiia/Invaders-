@@ -7,9 +7,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject playerObject;
     new Vector3 initialPosition = new Vector3(0, 0, -10);
 
+    [SerializeField] bool cursorIsVisible = true;
+
     void Start()
     {
         InstantiateObject(playerObject, .5f);
+        Cursor.visible = cursorIsVisible;
     }
 
     // Instantiation System ------------------------------------------------------------

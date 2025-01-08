@@ -522,3 +522,4 @@ MonoBehaviour:
   maxX: 28
   minZ: -15
   maxZ: 14
+  movementSmoothness: 5
