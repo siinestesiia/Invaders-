@@ -15,7 +15,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "LeftWeaponAttack",
+                    "name": "Shoot",
                     "type": "Button",
                     "id": "ef93e334-7b95-487b-ba56-15397d262e1c",
                     "expectedControlType": "Button",
@@ -41,7 +41,7 @@
                     "interactions": "Hold",
                     "processors": "",
                     "groups": "",
-                    "action": "LeftWeaponAttack",
+                    "action": "Shoot",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

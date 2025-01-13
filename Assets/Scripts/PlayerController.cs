@@ -8,8 +8,7 @@ public class PlayerController : MonoBehaviour
     PlayerInput playerInput;
     
     InputAction moveAction;
-    InputAction leftWeaponAttack;
-    InputAction rightWeaponAttack;
+    InputAction shoot;
 
     private Vector2 mousePosition;
     private float cameraHeight;
@@ -27,8 +26,7 @@ public class PlayerController : MonoBehaviour
     {
         playerInput = GetComponent<PlayerInput>();
         moveAction = playerInput.actions["move"];
-        leftWeaponAttack = playerInput.actions["LeftWeaponAttack"];
-        rightWeaponAttack = playerInput.actions["RightWeaponAttack"];
+        shoot = playerInput.actions["Shoot"];
 
         cameraHeight = Camera.main.transform.position.y;
     }
@@ -36,7 +34,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         SetPlayerPosition();
-        WeaponAttack();
+        ShootWeapons();
     }
 
 
@@ -63,16 +61,17 @@ public class PlayerController : MonoBehaviour
     }
 
     // Spaceship Weapons ------------------------------------------------------
-    private void WeaponAttack()
+    private void ShootWeapons()
     {
-        if (leftWeaponAttack.IsPressed())
+        if (shoot.IsPressed())
         {
-            Debug.Log("Shooting left weapon!");
+            // Rise an Event for shooting.
+            Debug.Log("the Spaceship is shooting!");
         }
-        
-        if (rightWeaponAttack.IsPressed())
+        else if (!shoot.IsPressed())
         {
-            Debug.Log("Shooting right weapon!");
+            // Rise an event for stopping to shoot.
+            Debug.Log("The Spaceship stopped shooting!");
         }
     }
 }

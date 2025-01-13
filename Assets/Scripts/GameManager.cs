@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(delay);
         Instantiate(gameObject);
-        Debug.Log($"{gameObject.name} has been instantiated at coordinates {initialPosition}.");
+        // Debug.Log($"{gameObject.name} has been instantiated at coordinates {initialPosition}.");
     }
 
 }
