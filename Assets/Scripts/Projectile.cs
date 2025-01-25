@@ -4,33 +4,62 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
+    PlayerController playerController;
+
     List<ParticleSystem> laserParticles;
 
     [Header ("- Laser Beam Parameters -")]
     [SerializeField] float laserBeamSpeed = 60;
     [SerializeField] float travelDistance = 35;
+    
 
     void Start()
     {
-        laserParticles = new List<ParticleSystem>(GetComponentsInChildren<ParticleSystem>());
+        playerController = GetComponent<PlayerController>(); // The script.
+        playerController.OnShooting += ActivateProjectile;
+        playerController.OnStopShooting += DeactivateProjectile;
 
-        ActivateProjectile();
+        laserParticles = new List<ParticleSystem>(GetComponentsInChildren<ParticleSystem>());
+        DeactivateProjectile();
         SetProjectileSpeed(laserBeamSpeed);
     }
 
-    void ActivateProjectile()
+    void OnDestroy()
     {
-        foreach (var particle in laserParticles)
-        {
-            particle.Play();
+        if (playerController != null)
+        {   
+            playerController.OnShooting -= ActivateProjectile;
+            playerController.OnStopShooting -= DeactivateProjectile;
         }
     }
 
-    void DeactivateProjectile()
+    public void ActivateProjectile()
     {
         foreach (var particle in laserParticles)
         {
-            particle.Stop();
+            if (!particle.isPlaying)
+            {
+                particle.Play();
+            }
+            else
+            {
+                continue;
+            }
+        }
+    }
+
+    public void DeactivateProjectile()
+    {
+        foreach (var particle in laserParticles)
+        {
+            if (particle.isPlaying)
+            {
+                particle.Stop();
+            }
+            else
+            {
+                continue;
+            }
         }        
     }
 
@@ -44,8 +73,6 @@ public class Projectile : MonoBehaviour
 
             // Manage the projectile's distance based on its speed.
             mainModule.startLifetime = travelDistance / projectileSpeed;
-
-            // Don't forget to add a Trigger at the top of the screen to kill particles.
         } 
     }
 }

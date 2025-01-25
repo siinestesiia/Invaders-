@@ -458,6 +458,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerObject: {fileID: 7185711951793755815, guid: 9dbd7e302e97413418a59b0eb4ee0582,
     type: 3}
+  triggerObject: {fileID: 6677503257194345013, guid: 6aa54936390b3ed46af49b3c466bc3f1,
+    type: 3}
   cursorIsVisible: 0
 --- !u!4 &1129736878
 Transform:
@@ -492,7 +494,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!64 &2016396254
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -575,7 +577,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -3, z: 0}
-  m_LocalScale: {x: 5, y: 2, z: 4}
+  m_LocalScale: {x: 7, y: 2, z: 4}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}

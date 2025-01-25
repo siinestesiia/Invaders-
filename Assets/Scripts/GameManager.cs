@@ -5,28 +5,38 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] GameObject playerObject;
-    new Vector3 initialPosition = new Vector3(0, 0, -10);
+    [SerializeField] GameObject triggerObject;
+
+    Vector3 initialPosition = new Vector3(0, 0, -10);
 
     [SerializeField] bool cursorIsVisible = true;
 
     void Start()
     {
-        InstantiateObject(playerObject, .5f);
+        InstantiateObject(playerObject, .5f, initialPosition);
+        InstantiateObject(triggerObject, .5f, new Vector3(0f, 0f, 19f));
+        
         Cursor.visible = cursorIsVisible;
     }
 
     // Instantiation System ------------------------------------------------------------
-    public void InstantiateObject(GameObject gameObject, float delay)
+    public void InstantiateObject(GameObject gameObject, float delay, Vector3 initPosition)
     {
-        gameObject.transform.position = initialPosition;
-        StartCoroutine(DelayedInstantiation(gameObject, delay));
+        if (gameObject != null)
+        {
+            gameObject.transform.position = initPosition;
+            StartCoroutine(DelayedInstantiation(gameObject, delay));
+        }
+        else
+        {
+            Debug.Log("Unable to find game object, please check reference.");
+        }    
     }
 
     IEnumerator DelayedInstantiation(GameObject gameObject, float delay)
     {
         yield return new WaitForSecondsRealtime(delay);
         Instantiate(gameObject);
-        // Debug.Log($"{gameObject.name} has been instantiated at coordinates {initialPosition}.");
     }
 
 }

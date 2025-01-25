@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,13 +6,19 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    // Projectile projectile;
+    public event Action OnShooting;
+    public event Action OnStopShooting;
+
+    bool isShooting = false;
+
     PlayerInput playerInput;
     
     InputAction moveAction;
-    InputAction shoot;
+    InputAction shootAction;
 
     private Vector2 mousePosition;
-    private float cameraHeight;
+    private float cameraHeight; // From top view.
     
     [Header ("World Space Boundaries for the Spaceship movement.")]
     [SerializeField] float minX = -28;
@@ -25,8 +32,9 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         playerInput = GetComponent<PlayerInput>();
+        
         moveAction = playerInput.actions["move"];
-        shoot = playerInput.actions["Shoot"];
+        shootAction = playerInput.actions["Shoot"];
 
         cameraHeight = Camera.main.transform.position.y;
     }
@@ -38,7 +46,7 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    // Spaceship Movement ----------------------------------------------------
+    // Spaceship Movement ---------------------------------------------------- //
     private void SetPlayerPosition()
     {
         mousePosition = moveAction.ReadValue<Vector2>();
@@ -60,18 +68,20 @@ public class PlayerController : MonoBehaviour
         return new Vector3(clampedX, positionCoordinates.y, clampedZ);
     }
 
-    // Spaceship Weapons ------------------------------------------------------
+    // Spaceship Weapons ------------------------------------------------------ //
     private void ShootWeapons()
     {
-        if (shoot.IsPressed())
+        if (shootAction.IsPressed() && !isShooting)
         {
-            // Rise an Event for shooting.
+            isShooting = true;
             Debug.Log("the Spaceship is shooting!");
+            OnShooting?.Invoke();
         }
-        else if (!shoot.IsPressed())
+        else if (!shootAction.IsPressed() && isShooting)
         {
-            // Rise an event for stopping to shoot.
+            isShooting = false;
             Debug.Log("The Spaceship stopped shooting!");
+            OnStopShooting?.Invoke();
         }
     }
 }
